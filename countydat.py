@@ -73,5 +73,10 @@ sns.lineplot(x='date', y='deaths', hue='region', data=region_df)
 plt.show()
 
 
+sns.lineplot(x='date', y='cases', hue='region', data=region_df)
+
+plt.show()
+
+
 
 
