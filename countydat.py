@@ -25,7 +25,7 @@ del white
 
 white2['pct_white'] = 1 - white2['pct_white']
 white2 = white2.rename(columns = {'pct_white': 'Minority_pct'})
-
+white2['Minority_pct'] = round(white2['Minority_pct'], 4)
 
 
 census = pd.read_csv("County_totals2022.csv")
@@ -144,6 +144,10 @@ sns.lineplot(x='date', y='cases', hue='region', data=region_df)
 plt.show()
 
 sns.lineplot(x='date', y='dailydeath', hue='region', data=region_df)
+
+plt.show()
+
+sns.lineplot(x='date', y='weeklydeath', hue='region', data=region_df)
 
 plt.show()
 
