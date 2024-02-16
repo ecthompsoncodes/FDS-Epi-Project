@@ -18,6 +18,16 @@ import seaborn as sns
 county_data = pd.read_csv("us-counties-2021.csv")
 
 # Prepping census data to be merged
+white = pd.read_csv("census_data.csv")
+white2 = white[['county', 'pct_white']]
+
+del white
+
+white2['pct_white'] = 1 - white2['pct_white']
+white2 = white2.rename(columns = {'pct_white': 'Minority_pct'})
+
+
+
 census = pd.read_csv("County_totals2022.csv")
 census = census.drop(census.columns[[1, 2, 4]], axis = 1)
 census.columns.values[1] = 'Population'
@@ -71,6 +81,12 @@ def transmission_level(weeklyper100k):
         
 nc_cd['tranlevel'] = nc_cd['weeklyper100k'].apply(transmission_level)
 
+
+nc_cd = pd.merge(nc_cd, white2, on = 'county', how = 'left')
+ 
+nc_cd2 = nc_cd.drop(nc_cd[nc_cd['tranlevel'] == 'Error'].index)
+
+
 # Sorting the counties by region for base visualizations
 Central_reg = ['Anson', 'Cabarrus', 'Gaston', 'Lincoln', 'Mecklenburg', 'Stanly', 'Union']
 
@@ -108,12 +124,12 @@ def assign_region(county):
     else:
         return 'Error'
 
-nc_cd['region'] = nc_cd['county'].apply(assign_region)
-print(nc_cd['region'].value_counts())
+nc_cd2['region'] = nc_cd2['county'].apply(assign_region)
+print(nc_cd2['region'].value_counts())
 
-nc_cd.to_csv('countyall.csv')
+nc_cd2.to_csv('countyall.csv')
 
-region_df = nc_cd.groupby(['region', 'date']).agg({'cases': 'sum', 'deaths': 'sum', 'dailycase': 'sum',
+region_df = nc_cd2.groupby(['region', 'date']).agg({'cases': 'sum', 'deaths': 'sum', 'dailycase': 'sum',
                                                    'weeklycase': 'sum', 'dailydeath': 'sum', 'weeklydeath':
                                                        'sum'}).reset_index()
 region_df = region_df.sort_values(by = 'date')
@@ -122,7 +138,6 @@ region_df = region_df.sort_values(by = 'date')
 sns.lineplot(x='date', y='deaths', hue='region', data=region_df)
 
 plt.show()
-
 
 sns.lineplot(x='date', y='cases', hue='region', data=region_df)
 
@@ -135,3 +150,4 @@ plt.show()
 sns.lineplot(x='date', y='weeklydeath', hue='region', data=region_df)
 
 plt.show()
+
