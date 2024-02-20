@@ -26,7 +26,7 @@ analysis_data = pd.read_csv("analysis_data.csv").values
 
 #Split the dataset into training and testing sets
 #For X, use features in column indexes 2-5; y is the last column
-X, y = analysis_data[:, 2:5], analysis_data[:, 5]
+X, y = analysis_data[:, 3:7], analysis_data[:, 7]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 y = y.astype('bool')
