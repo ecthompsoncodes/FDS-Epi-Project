@@ -9,10 +9,10 @@ References:
     https://www.geeksforgeeks.org/sklearn-perceptron/
 """
 
-import os as os
+# import os as os
 
-fileloc = "C:\\Users\\bowmahea\\OneDrive\\FDS Masters\\FDS 510\\epiProject"
-os.chdir(fileloc)
+# fileloc = "C:\\Users\\bowmahea\\OneDrive\\FDS Masters\\FDS 510\\epiProject"
+#os.chdir(fileloc)
 
 # Dataset loading
 import pandas as pd
