@@ -9,10 +9,10 @@ References:
     https://www.geeksforgeeks.org/sklearn-perceptron/
 """
 
-# import os as os
+import os as os
 
-# fileloc = "C:\\Users\\bowmahea\\OneDrive\\FDS Masters\\FDS 510\\epiProject"
-#os.chdir(fileloc)
+fileloc = "C:\\Users\\bowmahea\\OneDrive\\FDS Masters\\FDS 510\\epiProject"
+os.chdir(fileloc)
 
 # Dataset loading
 import pandas as pd
@@ -22,19 +22,19 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report 
 
 #Load dataset for analysis after cleaning and combining
-analysis_data = pd.read_csv("analysis_data.csv").values
+analysis_data = pd.read_csv("analysis_data_small.csv").values
 
 #Split the dataset into training and testing sets
 #For X, use features in column indexes 2-5; y is the last column
-X, y = analysis_data[:, 3:7], analysis_data[:, 7]
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+X, y = analysis_data[:, 3:5], analysis_data[:, 5]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
 
 y = y.astype('bool')
 y_train = y_train.astype('bool')
 y_test = y_test.astype('bool')
 
 # Create a Perceptron classifier
-perceptron = Perceptron(random_state=1, verbose=1)
+perceptron = Perceptron(random_state=42, verbose=1)
 
 # Fit the model to the data
 perceptron.fit(X_train, y_train)
@@ -47,5 +47,5 @@ accuracy = accuracy_score(y_test, y_pred)
 print(f'Accuracy: {accuracy}') 
 
 # Generate a classification report 
-class_report = classification_report(y_test, y_pred)
+class_report = classification_report(y_test, y_pred,)
 print("Classification Report:\n", class_report) 
