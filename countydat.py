@@ -34,6 +34,39 @@ census.columns.values[1] = 'Population'
 census.columns.values[0] = 'county'
 census = census.drop(census.index[-1])
 
+#Population Density Data
+
+data = {
+    'county': [
+        'Alamance', 'Alexander', 'Alleghany', 'Anson', 'Ashe', 'Avery', 'Beaufort', 'Bertie', 'Bladen',
+        'Brunswick', 'Buncombe', 'Burke', 'Cabarrus', 'Caldwell', 'Camden', 'Carteret', 'Caswell', 'Catawba',
+        'Chatham', 'Cherokee', 'Chowan', 'Clay', 'Cleveland', 'Columbus', 'Craven', 'Cumberland', 'Currituck',
+        'Dare', 'Davidson', 'Davie', 'Duplin', 'Durham', 'Edgecombe', 'Forsyth', 'Franklin', 'Gaston', 'Gates',
+        'Graham', 'Granville', 'Greene', 'Guilford', 'Halifax', 'Harnett', 'Haywood', 'Henderson', 'Hertford',
+        'Hoke', 'Hyde', 'Iredell', 'Jackson', 'Johnston', 'Jones', 'Lee', 'Lenoir', 'Lincoln', 'Macon', 'Madison',
+        'Martin', 'McDowell', 'Mecklenburg', 'Mitchell', 'Montgomery', 'Moore', 'Nash', 'New Hanover', 'Northampton', 'Onslow',
+        'Orange', 'Pamlico', 'Pasquotank', 'Pender', 'Perquimans', 'Person', 'Pitt', 'Polk', 'Randolph', 'Richmond',
+        'Robeson', 'Rockingham', 'Rowan', 'Rutherford', 'Sampson', 'Scotland', 'Stanly', 'Stokes', 'Surry', 'Swain',
+        'Transylvania', 'Tyrrell', 'Union', 'Vance', 'Wake', 'Warren', 'Washington', 'Watauga', 'Wayne', 'Wilkes',
+        'Wilson', 'Yadkin', 'Yancey'
+    ],
+    'population_density_per_sq_mile': [
+        404.8, 140.2, 46.4, 41.5, 62.3, 72.0, 53.6, 25.7, 33.8, 160.8, 410.4, 173.0, 625.1, 170.9, 43.1, 133.3,
+        53.5, 400.2, 111.9, 63.2, 79.4, 51.6, 214.4, 54.0, 142.5, 512.9, 107.3, 96.3, 305.4, 162.0, 59.8, 1133.7,
+        96.7, 938.1, 139.4, 640.7, 30.8, 27.5, 114.6, 76.7, 838.0, 67.2, 224.5, 112.2, 311.8, 61.0, 133.5, 7.5,
+        325.0, 87.8, 272.7, 19.5, 248.1, 138.1, 293.4, 71.8, 47.1, 48.3, 101.3, 2130.4, 67.4, 52.4, 142.9, 175.7,
+        1174.0, 32.6, 268.4, 374.0, 36.5, 178.8, 69.1, 52.6, 99.7, 261.0, 81.3, 184.3, 90.7, 123.0, 161.0, 287.1,
+        114.0, 62.4, 107.1, 158.2, 99.1, 134.0, 26.8, 87.2, 8.3, 376.6, 168.7, 1353.3, 43.4, 31.8, 173.1, 211.8,
+        87.5, 214.3, 111.1, 59.1
+        ]
+}
+
+popdens = pd.DataFrame(data)
+popdens.columns.values[1] = 'pop_dens'
+popdens = popdens.sort_values(by='county').reset_index(drop=True)
+print(popdens)
+
+
 #Sorting the data by State
 nc_cd = county_data.query('state == "North Carolina"')
 
@@ -81,6 +114,7 @@ def transmission_level(weeklyper100k):
         
 nc_cd['tranlevel'] = nc_cd['weeklyper100k'].apply(transmission_level)
 
+nc_cd = pd.merge(nc_cd, popdens, on = 'county', how = 'left')
 
 nc_cd = pd.merge(nc_cd, white2, on = 'county', how = 'left')
  
@@ -151,7 +185,16 @@ sns.lineplot(x='date', y='weeklydeath', hue='region', data=region_df)
 
 plt.show()
 
-sns.lineplot(x='date', y='weeklydeath', hue='region', data=region_df)
+def categorize_hotspot(cases):
+    if cases >= 50:
+        return True
+    else:
+        return False
 
+nc_cd2['Hotspot'] = nc_cd2['weeklyper100k'].apply(categorize_hotspot)
+
+data_analysis = nc_cd2[["county", "date", "pop_dens", "Population", "cases",'weeklyper100k', "Hotspot"]]
+
+data_analysis.to_csv("analysis_data.csv")
 plt.show()
 
