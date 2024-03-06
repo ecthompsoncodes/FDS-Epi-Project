@@ -7,7 +7,7 @@ library(tidyverse)
 setwd("C:/Users/scott/OneDrive/Documents/FDS 510/Dataset")
 
 df = read_csv("data_full.csv")
-df = df[, -c(1,2,4:7,9:14,20:29)]
+df = df[, -c(1,2,4:7,9:14,20, 21)]
 
 result <- df %>%
   group_by(county) %>%
@@ -22,7 +22,7 @@ result = merge(result, df1, by = 'county')
 
 result = result[, -c(4, 5, 17:19)]
 
-result2 = result[, -c(1, 13, 14)]
+result2 = result[, -c(1, 13, 14, 20)]
 
 p = lm(hotspot_prop ~ ., result2)
 
