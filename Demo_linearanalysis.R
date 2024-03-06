@@ -22,7 +22,7 @@ result = merge(result, df1, by = 'county')
 
 result = result[, -c(4, 5, 17:19)]
 
-result2 = result[, -c(1, 13, 14, 20)]
+result2 = result[, -c(1, 13, 14, 15)]
 
 p = lm(hotspot_prop ~ ., result2)
 
