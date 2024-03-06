@@ -20,13 +20,17 @@ df1 = df %>%
 
 result = merge(result, df1, by = 'county')
 
-result = result[, -c(4, 5, 17:19)]
+result1 = result[, -c(4, 5, 17:19)]
 
-result2 = result[, -c(1, 13, 14, 15)]
+result2 = result1[, -c(1, 13, 14, 15)]
 
-p = lm(hotspot_prop ~ ., result2)
+intercept_only = lm(hotspot_prop ~ Population.x, result2)
 
-step_model = step(p)
-summary(step_model)
+all = lm(hotspot_prop ~ ., result2)
 
-step_model$anova
+forward_step_model = step(intercept_only, direction = 'forward', scope = formula(all), trace = 0)
+summary(forward_step_model)
+
+forward_step_model$anova
+
+forward_step_model$coefficients
