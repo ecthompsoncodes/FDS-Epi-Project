@@ -9,8 +9,8 @@ Decision Tree Attempt
 import pandas as pd
 import os as os
 
-fileloc = "C:\\Users\\scott\\OneDrive\\Documents\\FDS 510\\Dataset"
-os.chdir(fileloc)
+#fileloc = "C:\\Users\\scott\\OneDrive\\Documents\\FDS 510\\Dataset"
+#os.chdir(fileloc)
 
 df = pd.read_csv('resultdat.csv')
 
