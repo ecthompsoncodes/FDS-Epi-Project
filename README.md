@@ -12,7 +12,7 @@ The following Python packages are required:
 - `pytorch`: For neural network modeling.
 - `pandas`: For data manipulation and analysis.
 - `numpy`: For numerical operations.
-- `scikit-learn: For data splitting.
+- `scikit-learn`: For data splitting.
 
 ## Running the model
 The model architecture, training and evalutation is contained in the Jupyter Notebook: Neural_Network_Epi_Model.ipynb.
