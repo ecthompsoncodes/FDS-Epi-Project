@@ -15,7 +15,6 @@ The following Python packages are required:
 - `scikit-learn`: For data splitting.
 
 ## Running the model
-The model architecture, training and evalutation is contained in the Jupyter Notebook: Neural_Network_Epi_Model.ipynb.
+After further machine learning coursework and work experience, I built a new model that employs better practices. For example, categorical variables are handled differently depending on whether they are ordinal or nominal, data splitting is done sequentially since the data is sequential, and I use a simpler Neural Network model. The improved model can be found in the Jupyter Notebook: [Epi_NN_Model_Improved.ipynb](https://github.com/ecthompsoncodes/FDS-Epi-Project/blob/main/Epi_NN_Model_Improved.ipynb).
 
-## Report and findings
-You can read the final report here: [Trustworthy_AI_for_Epidemiology_Applications.pdf](https://github.com/ecthompsoncodes/FDS-Epi-Project/files/15179439/Trustworthy_AI_for_Epidemiology_Applications.pdf)
+The model architecture, training and evaluation for the original model is contained in Neural_Network_Epi_Model.ipynb. You can read the final report here: [Trustworthy_AI_for_Epidemiology_Applications.pdf](https://github.com/ecthompsoncodes/FDS-Epi-Project/files/15179439/Trustworthy_AI_for_Epidemiology_Applications.pdf)
